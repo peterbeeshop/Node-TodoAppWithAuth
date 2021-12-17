@@ -1,0 +1,15 @@
+
+
+<body>
+
+    <h1>Welcome <%= user %> </h1>
+
+    <button >View todos</button>
+</body>
+<script>
+    let btn = document.querySelector("button")
+    btn.addEventListener("click", function(e) {
+        window.location.href = "/todo/<%= id %>"
+       
+    })
+</script>

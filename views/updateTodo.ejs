@@ -1,0 +1,36 @@
+
+<div>
+
+    <h2>update todo</h2>
+    <h2>UPDATE: <%= todo.title %> </h2>
+    <form>
+        <label> Title</label>
+        <input type="text" name="title" required>
+        <button >update todo</button>
+    </form>
+    <a href="/todo/<%= id%> ">Go back</a>
+    <script>
+        let btn = document.querySelector('button')
+        btn.addEventListener("click", function(e) {
+            e.preventDefault()
+            let input = document.querySelector("input").value
+            console.log(input)
+            fetch(`/updateTodo/<%=todo._id %>`, {
+                method:"PUT",
+                headers: {
+                     'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: input,
+                }),
+            })
+            .then(res => res.json())
+            .then((data) => {
+                console.log(data)
+                window.location.href = `/todo/<%= id%> `;
+            })
+            .catch(e => console.log(e.message))
+        })
+        
+    </script>
+</div>

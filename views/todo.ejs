@@ -1,0 +1,127 @@
+<style>
+    html,body {
+         margin-top: 0;
+    }
+    .container {
+         background-image: url("../public/wave.svg");
+         background-repeat: no-repeat;
+    }
+    h2 {
+        color: aqua;
+        text-align: center;
+    }
+    .todo {
+        height: 120px;
+        width: 180px;
+        background-color: blanchedalmond;
+        margin: 10px;
+        padding: 10px;
+    }
+    button {
+        border: 1px slategrey solid;
+        border-radius: 12px;
+        padding: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: cornsilk;
+    }
+    a {
+        text-decoration: none;
+    }
+    section {
+        height: 80px;
+        background-color: cornflowerblue;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    form {
+        height: 120px;
+        width: 200px;
+        background-color: burlywood;
+        text-align: center;
+        padding: 10px;
+    }
+    form button {
+        margin-top: 15px;
+    }
+</style>
+<div class="container">
+   <section>
+       <button><a href="/">Home</a></button>
+        <button id="logout">LOGOUT</button>
+   </section>
+    <h2>list of todos for <%= name %>  </h2> 
+  
+
+    <% if (todos.length === 0) { %>
+        <h2>NO TODOS TO DISPLAY</h2>
+    <% }else { %>
+    <% todos.forEach(todo => { %>
+    
+        <div class="todo" >
+            <h3>
+                <%= todo.title %>
+            </h3>
+                <button class="delete" id="<%= todo._id %>" > X</button>
+                <button  > <a href="/updateTodo/<%=todo._id %>">Update</a></button>     
+        </div>
+    <% }) %>
+    <%} %> 
+        <div>
+            <h2>create todo</h2>
+            <form action="/createTodo/<%=id %> " method="post">
+                <label> Title</label>
+                <input type="text" name="title" required>
+                <button type="submit">Create todo</button>
+            </form>
+        
+        </div>
+
+</div>
+
+<script>
+    let deleteBtn = document.querySelectorAll('.delete')
+    let updateBtn = document.querySelectorAll('.update')
+    let logoutBtn = document.getElementById("logout")
+
+    //delete btn
+    deleteBtn.forEach(btn => {
+        btn.addEventListener("click", function (e) {
+            console.log(e.target.id)
+
+            fetch(`/deleteTodo/${e.target.id}`, {
+                method: "DELETE"
+            })
+                .then(res => res.text())
+                .then((txt) => {
+                    console.log(txt)
+                    window.location.reload()
+                })
+                .catch(e => console.log(e.message))
+
+        })
+    })
+
+    //logout btn
+    logoutBtn.addEventListener("click", function() {
+        fetch("/user/logout", {
+            method: "POST",
+            // content-type: "application/json",
+        })
+        .then(res => res.text())
+        .then(data => {
+            console.log(data)
+            window.location.href = "/user/login"
+        })
+        .catch(e => console.log(e.message))
+    })
+
+    //update btn
+    updateBtn.forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            console.log(e.target.userId)
+        })
+    })
+</script>

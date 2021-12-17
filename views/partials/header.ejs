@@ -1,0 +1,19 @@
+<div>
+    <a href="/">
+        <h1>Home</h1>
+    </a>
+    <button id="logout">LOGOUT</button>
+</div>
+<script>
+     let logoutBtn = document.getElementById("logout")
+         logoutBtn.addEventListener("click", function () {
+                fetch("/user/logout", {
+                    method: "POST",                })
+                    .then(res => res.text())
+                    .then(data => {
+                        console.log(data)
+                        window.location.href = "/user/login"
+                    })
+                    .catch(e => console.log(e.message))
+            })
+</script>

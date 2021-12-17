@@ -83,7 +83,6 @@
 
 <script>
     let deleteBtn = document.querySelectorAll('.delete')
-    let updateBtn = document.querySelectorAll('.update')
     let logoutBtn = document.getElementById("logout")
 
     //delete btn
@@ -118,10 +117,5 @@
         .catch(e => console.log(e.message))
     })
 
-    //update btn
-    updateBtn.forEach(btn => {
-        btn.addEventListener('click', function (e) {
-            console.log(e.target.userId)
-        })
-    })
+
 </script>
